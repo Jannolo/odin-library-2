@@ -1,0 +1,32 @@
+#cards {
+    display: flex;
+    gap: 5px;
+
+}
+
+#card {
+    border: 2px solid black;
+    border-radius: 5px;
+
+
+    min-width: 150px;
+
+    text-align: center;
+}
+
+#card-header {
+    font-size: 20px;
+    background-color: lightblue;
+
+    padding: 10px 10px;
+}
+
+#book-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#book-dialog::backdrop {
+    background: rgba(128, 128, 128, 0.74) ;
+    
+}
