@@ -16,6 +16,9 @@ function Book (title, author, pages, read) {
 
 function loopBooks () {
     const cardsDiv = document.querySelector("#cards")
+    while(cardsDiv.firstChild) {
+        cardsDiv.removeChild(cardsDiv.firstChild)
+    }
     
 
     library.forEach(book => {
@@ -42,7 +45,29 @@ function loopBooks () {
         readDiv.id = 'readDiv'
         readDiv.textContent = "Read? " + book.read
 
-        cardBody.append(authorDiv, pageDiv, readDiv)
+        const removeBtn = document.createElement('button')
+        removeBtn.textContent ='X'
+        
+        removeBtn.addEventListener('click', () => {
+
+            library.splice(library.indexOf(book), 1)
+            loopBooks();
+        })
+
+        const readBtn = document.createElement('button')
+        readBtn.textContent = "Read"
+        readBtn.addEventListener('click', () => {
+            if (book.read == 'read') {
+                book.read = "not yet read"
+            } else {
+                book.read = "read"
+            }
+
+            loopBooks();
+        })
+
+
+        cardBody.append(authorDiv, pageDiv, readDiv, removeBtn, readBtn)
 
         card.appendChild(cardHeader)
         card.appendChild(cardBody)
@@ -50,6 +75,30 @@ function loopBooks () {
         cardsDiv.appendChild(card)
     });
 }
+
+const formDialog = document.querySelector('#form-dialog')
+const bookForm = document.querySelector('#book-form')
+const newBookBtn = document.querySelector('#new-book')
+newBookBtn.addEventListener('click', () => {
+    formDialog.showModal();
+})
+
+const confirmBtn = document.querySelector('#confirmBtn')
+confirmBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    title = document.querySelector('#title').value
+    author= document.querySelector('#author').value
+    pages = document.querySelector('#pages').value
+    read = document.querySelector('#read').value
+
+    library.push(new Book(title, author, pages, read))
+    loopBooks()
+    bookForm.reset();
+
+    formDialog.close();
+})
+const cancelBtn = document.querySelector('#cancelBtn')
+
 
 
 
